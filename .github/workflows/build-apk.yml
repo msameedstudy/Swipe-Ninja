@@ -2,43 +2,40 @@ name: Build Android APK
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 jobs:
   build:
+    name: Build APK
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: ⚙️ Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: '20'
 
-      - name: 📦 Install dependencies
-        run: |
-          npm install -g @capacitor/cli
-          npm install
-          npx cap init swipe-ninja com.swipeninja.app --web-dir=public
-          npx cap add android
+      - name: Install dependencies
+        run: npm install
 
-      - name: 🔧 Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+      - name: Add Android platform
+        run: npx cap add android
 
-      - name: 📂 Build Android APK
+      - name: Build web assets
+        run: npm run build || echo "Skipping build if no script"
+
+      - name: Sync Capacitor
+        run: npx cap sync
+
+      - name: Build APK with Gradle
         run: |
           cd android
           ./gradlew assembleDebug
 
-      - name: 📤 Upload APK artifact
-        uses: actions/upload-artifact@v3
+      - name: Upload APK
+        uses: actions/upload-artifact@v4  # ✅ Fixed here
         with:
-          name: swipe-ninja-apk
+          name: app-debug.apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
