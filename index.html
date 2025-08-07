@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>Swipe Ninja</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="mainMenuScreen" class="screen active">
+        <div class="currency-display top-right">
+            <span><img src="assets/icon-coin.png" alt="Coins"> <span id="mainMenuCoins">0</span></span>
+            <span><img src="assets/icon-diamond.png" alt="Diamonds"> <span id="mainMenuDiamonds">0</span></span>
+        </div>
+        <div class="menu-container">
+            <h1>Swipe Ninja</h1>
+            <div id="highScoreDisplay">High Score: 0</div>
+            <button id="playBtn" class="menu-btn">Play</button>
+            <button id="shopBtn" class="menu-btn">Shop</button>
+        </div>
+    </div>
+
+    <div id="gameScreen" class="screen">
+        <div id="gameArea">
+            <div id="uiContainer">
+                <div id="stats">
+                    <span id="score">Score: 0</span>
+                    <span id="health">Health: 100%</span>
+                </div>
+                <div id="gameControls">
+                    <div class="currency-display">
+                        <span><img src="assets/icon-coin.png" alt="Coins"> <span id="coins">0</span></span>
+                        <span><img src="assets/icon-diamond.png" alt="Diamonds"> <span id="diamonds">0</span></span>
+                    </div>
+                    <button id="pauseBtn">||</button>
+                </div>
+            </div>
+            <img src="assets/hero-full.png" id="hero" alt="Hero">
+            <div id="enemies"></div>
+            <div id="projectiles"></div>
+        </div>
+    </div>
+
+    <div id="shopScreen" class="screen">
+        <div class="shop-container">
+            <h1>Shop</h1>
+            <div class="currency-display top-right">
+                <span><img src="assets/icon-coin.png" alt="Coins"> <span id="shopCoins">0</span></span>
+                <span><img src="assets/icon-diamond.png" alt="Diamonds"> <span id="shopDiamonds">0</span></span>
+            </div>
+            <div id="shopContent">
+                <div class="shop-section">
+                    <h2>Upgrades</h2>
+                    <div class="shop-item-grid" data-section="upgrade"></div>
+                </div>
+
+                <div class="shop-section">
+                    <h2>Customization</h2>
+                    <div class="shop-subsection">
+                        <h3>Background Themes</h3>
+                        <div id="themeSelection" class="shop-item-grid"></div>
+                    </div>
+                    <div class="shop-subsection">
+                        <h3>Castle Skins</h3>
+                        <div class="shop-item-grid" data-section="castle"></div>
+                    </div>
+                    <div class="shop-subsection">
+                        <h3>Projectile Skins</h3>
+                        <div class="shop-item-grid" data-section="projectile"></div>
+                    </div>
+                    <div class="shop-subsection">
+                        <h3>Enemy Skins</h3>
+                        <div class="shop-item-grid" data-section="enemy"></div>
+                    </div>
+                </div>
+            </div>
+            <button id="backToMenuBtn" class="menu-btn">Back to Menu</button>
+        </div>
+    </div>
+
+    <div id="messageContainer" class="modal-container"><div class="modal-content"><h1 id="messageTitle"></h1><p id="messageText"></p><div class="modal-buttons"><button id="restartBtn"></button><button id="mainMenuBtn"></button></div></div></div>
+    <div id="continueContainer" class="modal-container"><div class="modal-content"><h1>Defeated!</h1><p id="continueText"></p><div class="continue-buttons"><button id="continueYesBtn">Yes</button><button id="continueNoBtn">No</button></div></div></div>
+    <div id="bonusContainer" class="modal-container"><div class="modal-content"><h1>Weekly Bonus!</h1><p>Welcome back! Here is your reward:</p><p id="bonusDetails"></p><button id="closeBonusBtn">Awesome!</button></div></div>
+    <div id="pauseMenuScreen" class="modal-container"><div class="modal-content"><h1>Paused</h1><div class="modal-buttons"><button id="resumeBtn">Resume</button><button id="exitToMenuBtn">Main Menu</button></div></div></div>
+    
+    <script src="main.js"></script>
+</body>
+</html>
