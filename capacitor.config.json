@@ -1,6 +1,6 @@
 {
   "appId": "com.swipeninja.app",
   "appName": "Swipe Ninja",
-  "webDir": ".",
+  "webDir": "public",
   "bundledWebRuntime": false
 }

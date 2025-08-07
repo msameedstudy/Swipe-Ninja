@@ -1,40 +1,19 @@
 name: Build Android APK
 
 on:
- HEAD
-
+  workflow_dispatch:
   push:
     branches:
       - main
- 37817c8 (Update build-apk.yml and capacitor config)
-  workflow_dispatch:
 
 jobs:
   build:
- HEAD
     name: Build APK
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Install Capacitor CLI
-        run: npm install -g @capacitor/cli @capacitor/core
-
-      - name: Add Android platform
-        run: npx cap add android
-
-      - name: Copy web files
-        run: npx cap copy
-
-      - name: Build APK with Gradle
-
-    runs-on: ubuntu-latest
-
-    steps:
       - name: 📥 Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: ⚙️ Set up Node.js
         uses: actions/setup-node@v3
@@ -44,31 +23,24 @@ jobs:
       - name: 📦 Install dependencies
         run: |
           npm install -g @capacitor/cli
-          npm install
+          npm install || true  # Skip error if package.json not found
           npx cap init swipe-ninja com.swipeninja.app --web-dir=public
           npx cap add android
+          npx cap copy
 
-      - name: 🔧 Set up JDK
+      - name: ☕ Set up JDK
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: 📂 Build Android APK
-   37817c8 (Update build-apk.yml and capacitor config)
+      - name: 🛠️ Build APK
         run: |
           cd android
           ./gradlew assembleDebug
 
- HEAD
-      - name: Upload APK
+      - name: 📤 Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: swipe-ninja.apk
-
-      - name: 📤 Upload APK artifact
-        uses: actions/upload-artifact@v3
-        with:
           name: swipe-ninja-apk
-     37817c8 (Update build-apk.yml and capacitor config)
           path: android/app/build/outputs/apk/debug/app-debug.apk
