@@ -12,22 +12,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install dependencies
-        run: npm install
+      - name: Install Capacitor CLI
+        run: npm install -g @capacitor/cli @capacitor/core
 
       - name: Add Android platform
         run: npx cap add android
 
-      - name: Build web assets
-        run: npm run build || echo "Skipping build if no script"
-
-      - name: Sync Capacitor
-        run: npx cap sync
+      - name: Copy web files
+        run: npx cap copy
 
       - name: Build APK with Gradle
         run: |
@@ -35,7 +27,7 @@ jobs:
           ./gradlew assembleDebug
 
       - name: Upload APK
-        uses: actions/upload-artifact@v4  # ✅ Fixed here
+        uses: actions/upload-artifact@v4
         with:
-          name: app-debug.apk
+          name: swipe-ninja.apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
