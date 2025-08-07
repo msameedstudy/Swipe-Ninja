@@ -13,9 +13,9 @@ jobs:
 
     steps:
       - name: 📥 Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: ⚙️ Set up Node.js
+      - name: ⚙️ Set up Node.js 20 (required for Capacitor 7)
         uses: actions/setup-node@v3
         with:
           node-version: 20
@@ -25,13 +25,15 @@ jobs:
           npm install -g @capacitor/cli
           npm install
 
-      - name: ⚙️ Initialize Capacitor & Add Android
+      - name: ⚙️ Initialize Capacitor & Add Android (if needed)
         run: |
           npx cap init swipe-ninja com.swipeninja.app --web-dir=.
-          npx cap add android
+          if [ ! -d "android" ]; then
+            npx cap add android
+          fi
           npx cap copy
 
-      - name: 🔧 Set up Java JDK
+      - name: 🔧 Set up JDK 17 for Android Build
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
@@ -42,7 +44,7 @@ jobs:
           cd android
           ./gradlew assembleDebug
 
-      - name: 📤 Upload APK artifact
+      - name: 📤 Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: swipe-ninja-apk
